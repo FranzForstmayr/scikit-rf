@@ -453,9 +453,6 @@ class Network(object):
                     fid.close()
                     self.read_touchstone(filename, self.encoding)
 
-            if name is None and isinstance(file, str):
-                name = os.path.splitext(os.path.basename(file))[0]
-
         if self.frequency is not None and f_unit is not None:
             self.frequency.unit = f_unit
 
