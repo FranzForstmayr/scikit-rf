@@ -161,27 +161,20 @@ import os
 import warnings
 import io
 from pathlib import Path
-import pickle
 from pickle import UnpicklingError
 
-import sys
-import re
 import zipfile
 from copy import deepcopy as copy
 from numbers import Number
 from itertools import product
 
 import numpy as npy
-from numpy.linalg import inv as npy_inv
-from numpy import fft, gradient, ndarray, reshape, shape, ones, std
 from scipy import stats, signal  # for Network.add_noise_*, and Network.windowed
 from scipy.interpolate import interp1d  # for Network.interpolate()
-from scipy.ndimage.filters import convolve1d
-import unittest  # fotr unitest.skip
 
 from . import mathFunctions as mf
 from .frequency import Frequency
-from .util import get_fid, get_extn, find_nearest_index, slice_domain
+from .util import get_fid, get_extn, find_nearest_index
 from .time import time_gate
 
 from .constants import NumberLike, ZERO, K_BOLTZMANN, T0
@@ -1493,7 +1486,7 @@ class Network(object):
         return [(y, x) for x in range(self.nports) for y in range(self.nports)]
 
     @property
-    def passivity(self) -> ndarray:
+    def passivity(self) -> npy.ndarray:
         r"""
         passivity metric for a multi-port network.
 
@@ -1622,7 +1615,7 @@ class Network(object):
         dw = self.frequency.dw
 
         for m, n in self.port_tuples:
-            dphi = gradient(phi[:, m, n])
+            dphi = npy.gradient(phi[:, m, n])
             gd[:, m, n] = -dphi / dw
 
         return gd
@@ -4000,7 +3993,7 @@ def connect(ntwkA: Network, k: int, ntwkB: Network, l: int, num: int = 1) -> Net
               a_imag = ntwkA.inv.a.imag
               a = a_real + 1.j * a_imag
 
-          a = npy_inv(a)
+          a = npy.linalg.inv(a)
           a_H = npy.conj(a.transpose(0, 2, 1))
           cC = npy.matmul(a, npy.matmul(cB -cA, a_H))
       else :
@@ -4513,7 +4506,7 @@ def stdev(list_of_networks: Sequence[Network], attr: str = 's') -> npy.ndarray:
 
     Returns
     -------
-    stdev_array : ndarray
+    stdev_array : npy.ndarray
     An array of standard deviation values computed after combining the s-parameter values of the given networks.
 
     Examples
