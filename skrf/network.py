@@ -2505,7 +2505,7 @@ class Network(object):
             new_frequency = freq_or_n
 
         else:
-            dim = len(shape(freq_or_n))
+            dim = len(npy.shape(freq_or_n))
             if dim == 0:
                 # input is a number
                 n = int(freq_or_n)
