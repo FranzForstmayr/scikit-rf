@@ -364,8 +364,9 @@ class Network(object):
              * io.StringIO object (with `.name` property which contains the file extension, such as `myfile.s4p`)
              * pickled Network (.ntwk, .p) see :func:`write`
         name : str
-            Name of this Network. if None will try to use file, if
-            its a str
+            Name of this Network. If None will try to use file, if
+            its a str. In case of `file` is an `io.StringIO` instance the filename can be passed 
+            through this parameter.
         comments : str
             Comments associated with the Network
         s_def : str -> s_def :  can be: 'power', 'pseudo' or 'traveling'
@@ -432,6 +433,8 @@ class Network(object):
 
             # allows user to pass StringIO, filename or file obj
             if isinstance(file, io.StringIO):
+                if name:
+                    file.name = name
                 self.read_touchstone(file, self.encoding)
 
             else:
