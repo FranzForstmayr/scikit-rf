@@ -67,6 +67,7 @@ from __future__ import annotations
 import glob
 import inspect
 import json
+import logging
 import os
 import pickle
 import sys
@@ -100,7 +101,7 @@ def _get_extension(inst: Any) -> str:
     ]
 
     for cls, ext in extensions:
-        print(cls, ext)
+        logging.debug(f'{cls} {ext}')
         if isinstance(inst, cls):
             return ext
     return "p"

@@ -7,6 +7,9 @@ __version__ = '1.9.0'
 ## Import all  module names for coherent reference of name-space
 #import io
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 from . import (
     calibration,
@@ -77,7 +80,7 @@ def setup_pylab() -> bool:
     try:
         import matplotlib
     except ImportError:
-        print("matplotlib not found while setting up plotting")
+        logger.warning("matplotlib not found while setting up plotting")
         return False
 
     from . import plotting

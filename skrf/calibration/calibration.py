@@ -105,6 +105,7 @@ PNA interaction
 from __future__ import annotations
 
 import json
+import logging
 import warnings
 from collections import OrderedDict, defaultdict
 from copy import copy
@@ -305,7 +306,7 @@ class Calibration:
         # if not, then attempt to interpolate
         for k in list(range(len(self.ideals))):
             if self.ideals[k].frequency != self.measured[0].frequency:
-                print(dedent(
+                logging.warning(dedent(
                     f"""Warning: Frequency information doesn't match on ideals[{k}],
                     attempting to interpolate the ideal[{k}] Network .."""))
                 try:
@@ -313,7 +314,7 @@ class Calibration:
                     # the measurement frequency
                     self.ideals[k].interpolate_self(\
                         self.measured[0].frequency)
-                    print('Success')
+                    logging.info('Success')
 
                 except Exception as err:
                     raise(IndexError(f'Failed to interpolate. Check frequency of ideals[{k}].')) from err

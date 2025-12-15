@@ -45,6 +45,7 @@ NetworkSet Utilities
 """
 from __future__ import annotations
 
+import logging
 import zipfile
 from io import BytesIO
 from numbers import Number
@@ -1560,7 +1561,7 @@ def getset(ntwk_dict, s, *args, **kwargs):
     if len(ntwk_list) > 0:
         return NetworkSet( ntwk_list,*args, **kwargs)
     else:
-        print(f'Warning: No keys in ntwk_dict contain \'{s}\'')
+        logging.warning(f'No keys in ntwk_dict contain \'{s}\'')
         return None
 
 

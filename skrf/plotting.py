@@ -52,6 +52,7 @@ Convenience plotting functions
 """
 from __future__ import annotations
 
+import logging
 import os
 import warnings
 from numbers import Number
@@ -747,12 +748,12 @@ def save_all_figs(dir: str = './', format: None | list[str] = None,
         if format is None:
             plt.savefig(dir+fileName)
             if echo:
-                print(dir+fileName)
+                logging.info(dir+fileName)
         else:
             for fmt in format:
                 plt.savefig(dir+fileName+'.'+fmt, format=fmt)
                 if echo:
-                    print(dir+fileName+'.'+fmt)
+                    logging.info(dir+fileName+'.'+fmt)
 saf = save_all_figs
 
 @axes_kwarg
@@ -1212,7 +1213,7 @@ def animate(self: NetworkSet, attr: str = 's_deg', ylims: tuple = (-5, 5),
             plt.savefig(fname)
 
     if savefigs:
-        print('\n\n')
+        logging.info('Figures saved')
     if was_interactive:
         plt.ion()
 
